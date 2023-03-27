@@ -1,0 +1,754 @@
+@import "reset";
+@import "vars";
+
+/*_____________global style begin______________*/
+html {
+  box-sizing: border-box;
+}
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+body {
+  @extend %body_font;
+  background: #f9f7f4;
+}
+a {
+  text-decoration: none;
+  color: inherit;
+}
+img {
+  max-width: 100%;
+  height: auto;
+}
+.container {
+  max-width: 550px; /* с учетом отступов безопасности */
+  margin: 0 auto;
+  padding: 0 15px;
+}
+/*_______________global style end_______________*/
+
+/*_____________toDo__header begin______________*/
+.toDo__folder-corner {
+  position: relative;
+  z-index: 1;
+  min-height: 400px;
+  // background: linear-gradient(top,  #ffffff 0%,#e5e5e5 100%);
+  //   filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e5e5e5',GradientType=0 );
+  background-color: #fdf3b6;
+  //background-color: #ffffaa;
+  box-shadow: -5px 5px 5px rgba(0, 0, 0, 0.2);
+  &:before {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    border-top: 80px solid #eee;
+    border-right: 80px solid transparent;
+    box-shadow: -7px -7px 7px rgba(0, 0, 0, 0.3);
+  }
+  &:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 0px;
+    height: 0px;
+    border-bottom: 79px solid #f9f7f4;
+    border-left: 79px solid transparent;
+    box-shadow: 0 10px 0 #f9f7f4;
+  }
+}
+.toDo__header-inner {
+  width: 100%;
+  display: flex;
+  //flex-wrap: nowrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  height: 60px;
+  padding: 0 5px;
+  margin: 28px 0 28px 0;
+}
+.toDo__header-menu {
+  &-part1,
+  &-part2 {
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+  }
+}
+.toDo__header-remove-all {
+  margin-left: -9px;
+}
+.toDo__header {
+  &-select-all-cmd,
+  &-remove-all-cmd,
+  &-save-cmd,
+  &-reference-cmd {
+    position: relative;
+    border: 0;
+    background-color: inherit;
+  }
+  &-select-all-box,
+  &-remove-all-box {
+    max-width: 55px;
+    width: 100%;
+    height: 55px;
+    opacity: 1.1;
+  }
+  &-select-all-box:hover,
+  &-remove-all-box:hover {
+    opacity: 0.5;
+  }
+  &-select-all-cmd::after {
+    content: "Сделать все";
+    @extend %tooltip-bottom;  
+  }
+  &-remove-all-cmd::after {
+    content: "Отменить сделанное";
+    @extend %tooltip-bottom;  
+    margin-left: 15px;
+  }
+  &-save-cmd::after {
+    content: "Сохранить список";
+    @extend %tooltip-bottom;  
+    margin: 7px 0 0 6px;
+  }
+  &-reference-cmd::after {
+    content: "Справка";
+    @extend %tooltip-bottom;  
+    margin: -1px 0 0 -1px;
+  }
+  &-select-all-cmd:hover::after,
+  &-remove-all-cmd:hover::after,
+  &-save-cmd:hover::after,
+  &-reference-cmd:hover::after{
+    opacity: 1;  
+  }
+}
+.toDo__header-save-box {
+    max-width: 40px;
+    width: 100%;
+    height: 40px;
+    opacity: 0.8;
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+.toDo__header-reference-box {
+  max-width: 52px;
+  width: 100%;
+  height: 52px;
+  opacity: 0.8;
+  &:hover {
+    opacity: 0.5;
+  }
+}
+.toDo__header-filter-custom {
+  position: relative;
+  max-width: 150px;
+  width: 100%;
+  @extend %body_font;
+  font-size: 30px;
+  & .toDo__header-filter {
+    display: none; /*hide original SELECT element: */
+  }
+}
+.select-selected {
+  position: relative;
+  z-index: 1;
+  padding: 5px;
+  color: #212529;
+  cursor: pointer;
+}
+.select-selected::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: url(../images/select_underline.png) no-repeat 0% 220%;
+  //background-color:#f1f2f2;
+}
+.select-items {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  & div {
+    position: relative;
+    padding: 0 0 0.3em 0;
+    background-color: #fdf3b6;
+    color: #212529;
+    cursor: pointer;
+  }
+  & div:hover {
+    color: inherit;
+  }
+  & div::before {
+    content: "";
+    position: absolute;
+    top: 38px;
+    left: 0;
+    display: block;
+    width: 100%;
+    height: 15px;
+    opacity: 0;
+    background: url(../images/select_underline_item.png) no-repeat 0% 130%;
+    transition: opacity 300ms, transform 300ms ease-in-out;
+    transform: scaleX(0);
+  }
+  & div:hover::before {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+}
+/* Hide the items when the select box is closed: */
+.select-hide {
+  display: none;
+}
+
+/*_______________modal window begin_______________*/
+.reference-modal-window {
+  position: fixed;
+  left: 0;
+  top: 0;
+  z-index: 7;
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  opacity: 0;
+  visibility: hidden;
+  background-color: rgba(0, 0, 0, 0.5);
+  transform: scale(1.1);
+  transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+}
+.reference-modal-window-size {
+  position: relative;
+  width: auto;
+  margin: 10px;
+}
+.reference-modal-window-content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 0.3rem;
+  outline: 0;
+  background-color: #fdf3b6;
+  background-clip: padding-box;
+}
+.reference-modal-window-body {
+  position: relative;
+  flex: 1 1 auto;
+  padding: 15px;
+  overflow: auto;
+  font-size: 28px;
+  line-height: 135%;
+}
+.reference-modal-window-caption {
+  margin: 10px 0px 0px 0px;
+  text-align: center;
+  letter-spacing: 0.4em;
+  &-border {
+    position: relative;
+    padding: 0 15px;
+    &:before {
+      content: "";
+      z-index: 1;
+      @extend %border-sketch;
+      height: 48px;
+      border-right-color: transparent;
+      transform: rotate(2deg);
+    }
+    &:after {
+      content: "";
+      z-index: 1;
+      @extend %border-sketch;
+      height: 48px;
+      border-left-color: transparent;
+      border-top-color: transparent;
+      transform: rotate(-1deg);
+    }
+  }
+}
+.reference-modal-window-close-btn {
+  float: right;
+  font-weight: bold;
+  width: 1.5rem;
+  opacity: 1;
+  text-align: center;
+  line-height: 1.5rem;
+  cursor: pointer;
+  &:hover {
+    opacity: 0.6;
+  }
+}
+.reference-modal-window-show {
+  opacity: 1;
+  visibility: visible;
+  transform: scale(1);
+  transition: visibility 0s linear 0s, opacity 0.25s 0s, transform 0.25s;
+}
+.show-hide-description {
+  display: none;
+}
+.reference-modal-window-item {
+  list-style-position: inside;
+  list-style-type: decimal;
+}
+.reference-modal-window-add-link-box,
+.reference-modal-window-edit-link-box,
+.reference-modal-window-ok-link-box,
+.reference-modal-window-all-link-box,
+.reference-modal-window-save-link-box {
+  position: relative;
+  padding: 0 0 0.3em 0;
+  z-index: 2;
+  display: inline-block;
+  color: darkblue;
+}
+.reference-modal-window-add-link:focus,
+.reference-modal-window-edit-link:focus,
+.reference-modal-window-ok-link:focus,
+.reference-modal-window-all-link:focus,
+.reference-modal-window-save-link:focus {
+  outline: none;
+}
+.reference-modal-window-add-link-box::before {
+  content: "";
+  position: absolute;
+  top: -15px;
+  left: 0;
+  z-index: -1;
+  display: block;
+  width: 100%;
+  height: 68px;
+  opacity: 0;
+  background: url(../images/underline_item_dark_blue.png) no-repeat 75% 95%;
+  transition: opacity 300ms, transform 300ms ease-in-out;
+  transform: scaleX(0);
+}
+.reference-modal-window-edit-link-box::before {
+  content: "";
+  position: absolute;
+  top: -15px;
+  left: 0;
+  z-index: -1;
+  display: block;
+  width: 100%;
+  height: 68px;
+  opacity: 0;
+  background: url(../images/underline_item_dark_blue190.png) no-repeat 100% 95%;
+  transition: opacity 300ms, transform 300ms ease-in-out;
+  transform: scaleX(0);
+}
+.reference-modal-window-ok-link-box::before,
+.reference-modal-window-all-link-box::before {
+  content: "";
+  position: absolute;
+  top: -15px;
+  left: 0;
+  z-index: -1;
+  display: block;
+  width: 100%;
+  height: 68px;
+  opacity: 0;
+  background: url(../images/underline_item_dark_blue323.png) no-repeat 100% 93%;
+  transition: opacity 300ms, transform 300ms ease-in-out;
+  transform: scaleX(0);
+}
+.reference-modal-window-save-link-box::before {
+  content: "";
+  position: absolute;
+  top: -15px;
+  left: 0;
+  z-index: -1;
+  display: block;
+  width: 100%;
+  height: 68px;
+  opacity: 0;
+  background: url(../images/underline_item_dark_blue239.png) no-repeat 100% 97%;
+  transition: opacity 300ms, transform 300ms ease-in-out;
+  transform: scaleX(0);
+}
+.reference-modal-window-ok-link-box:hover::before,
+.reference-modal-window-add-link-box:hover::before,
+.reference-modal-window-edit-link-box:hover::before,
+.reference-modal-window-all-link-box:hover::before,
+.reference-modal-window-save-link-box:hover::before {
+  opacity: 1;
+  transform: scaleX(1);
+}
+.reference-modal-window-add {
+  &-text {
+    position: relative;
+    display: inline-block;
+    max-width: 150px;
+    width: 100%;
+  }
+  &-box-img {
+    position: absolute;
+    top: -15%;
+    left: 64%;
+    max-width: 55px;
+    width: 100%;
+    height: 55px;
+    opacity: 0.8;
+  }
+}
+.reference-modal-window-edit {
+  &-text {
+    position: relative;
+    display: inline-block;
+    width: 200px;
+  }
+  &-box-img {
+    position: absolute;
+    top: 0%;
+    left: 77%;
+    max-width: 40px;
+    width: 100%;
+    height: 40px;
+  }
+}
+.reference-modal-window-delete {
+  &-text {
+    position: relative;
+    display: inline-block;
+    max-width: 150px;
+    width: 100%;
+  }
+  &-box-img {
+    position: absolute;
+    top: -8%;
+    left: 62%;
+    max-width: 37px;
+    width: 100%;
+    height: 37px;
+  }
+}
+.reference-modal-window-ok {
+  &-text {
+    position: relative;
+    display: inline-block;
+    max-width: 150px;
+    width: 100%;
+  }
+  &-box-img {
+    position: absolute;
+    top: 0%;
+    left: 60%;
+    max-width: 35px;
+    width: 100%;
+    height: 35px;
+    opacity: 0.7;
+  }
+}
+.reference-modal-window-select-all {
+  &-text {
+    position: relative;
+    display: inline-block;
+    max-width: 190px;
+    width: 100%;
+  }
+  &-box-img {
+    position: absolute;
+    top: -28%;
+    left: 64%;
+    max-width: 61px;
+    width: 100%;
+    height: 61px;
+  }
+}
+.reference-modal-window-remouve-all {
+  &-text {
+    position: relative;
+    display: inline-block;
+    max-width: 250px;
+    width: 100%;
+  }
+  &-box-img {
+    position: absolute;
+    top: -10%;
+    left: 82%;
+    max-width: 61px;
+    width: 100%;
+    height: 61px;
+  }
+}
+.reference-modal-window-save {
+  &-text {
+    position: relative;
+    display: inline-block;
+    max-width: 235px;
+    width: 100%;
+  }
+  &-box-img {
+    position: absolute;
+    top: 0%;
+    left: 78%;
+    max-width: 37px;
+    width: 100%;
+    height: 37px;
+    opacity: 0.9;
+  }
+}
+/*_______________modal window end_______________*/
+
+/*_______________toDo__header end_______________*/
+
+/*_____________toDo__add_item begin______________*/
+.toDo__add-item-text {
+  display: block;
+  width: 100%;
+}
+.toDo__add-item-box-inner {
+  display: flex;
+  align-items: center;
+  padding: 5px 0px 16px 25px;
+}
+.toDo__add-item-element {
+  display: block;
+  padding: 25px;
+  color: #212529;
+  width: 100%;
+  height: 68px;
+  border: none;
+  background: transparent;
+  @extend %body_font;
+  &::placeholder {
+    text-align: center;
+    opacity: 0.6;
+    @extend %body_font;
+  }
+}
+.toDo__add-item-border-sketch {
+  position: relative;
+  padding: 0 5px;
+  &:before {
+    content: "";
+    z-index: -1;
+    @extend %border-sketch;
+    height: 68px;
+    border-right-color: transparent;
+    transform: rotate(2deg);
+  }
+  &:after {
+    content: "";
+    z-index: -1;
+    @extend %border-sketch;
+    height: 68px;
+    border-left-color: transparent;
+    border-top-color: transparent;
+    transform: rotate(-1deg);
+  }
+}
+.toDo__add-item-plus-cmd {
+    position: relative;
+    border: 0;    
+    background-color: inherit;
+  
+  &::after {
+    content: "Добавить";
+    @extend %tooltip-bottom;  
+    margin: -11px 0 0 -1px;
+  }
+  &:hover::after{
+    opacity: 1;  
+  }
+}
+.toDo__add-item-plus-box {
+  max-width: 85px;
+  width: 100%;
+  height: 85px;
+  opacity: 0.7;
+ &:hover {
+    opacity: 0.4;
+   }
+}
+.toDo__add-item-plus-img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+/*_______________toDo__add_item end_______________*/
+
+/*_______________toDo__added_item begin_______________*/
+.toDo__added-box {
+  padding-bottom: 81px;
+}
+
+.toDo__added-element {
+  display: block;
+  max-width: 340px;
+  width: 100%;
+  word-wrap: break-word;
+  padding-bottom: 10px;
+}
+
+:root {
+  --underline-intrinsic-width: 8;
+  --underline-width: 12;
+  --underline-cap-width: 4px;
+  --underline-offset-y: -2px;
+  --underline-padding-x: 0.12em;
+}
+.highlighted {
+  display: inline;
+  --underline-width-scale: calc(
+    var(--underline-width) / var(--underline-intrinsic-width)
+  );
+  padding: 0
+    calc(
+      var(--underline-padding-x) +
+        calc(var(--underline-cap-width) * var(--underline-width-scale))
+    );
+  //opacity:1;
+  box-decoration-break: clone;
+  background-repeat: no-repeat;
+  background-image: rgba(235, 255, 51, 0.7);
+  background-image: linear-gradient(
+    305deg,
+    rgba(235, 255, 51, 0.6) 0%,
+    rgba(235, 255, 51, 0.4) 79%,
+    rgba(235, 255, 51, 0.8) 89%
+  );
+  background-position-x: calc(
+      var(--underline-cap-width) * var(--underline-width-scale)
+    ),
+    0, 100%;
+  background-position-y: calc(100% - var(--underline-offset-y) * -1);
+  background-size: calc(
+        100% -
+          calc(var(--underline-cap-width) * var(--underline-width-scale) * 2)
+      )
+      calc(var(--underline-width) * 1px),
+    auto calc(var(--underline-width) * 1px),
+    auto calc(var(--underline-width) * 1px);
+}
+.highlighted-width {
+  --underline-width: 20;
+  --underline-offset-y: -2px;
+}
+.bg-none {
+  background-image: none;
+}
+.toDo__added-item {
+  display: flex;
+  align-items: center;
+  padding: 0 12px 0 12px;
+  &-text-box {
+    width: 100%;
+  }
+  &-ok-cmd,
+  &-edit-cmd,
+  &-delete-cmd {
+    position: relative;
+    border: 0;
+    background-color: inherit;
+  }
+  &-ok-cmd::after {
+    content: "Выполнить";
+    @extend %tooltip-bottom;  
+    margin: 6px 0 0 6px;
+  }
+  &-edit-cmd::after {
+    content: "Редактировать";
+    @extend %tooltip-bottom;  
+    margin: 5px 0 0 0;
+  }
+  &-delete-cmd::after {
+    content: "Удалить";
+    @extend %tooltip-bottom;  
+    margin: 5px 0 0 5px;
+  }
+  &-ok-cmd:hover::after,
+  &-edit-cmd,:hover::after,
+  &-delete-cmd:hover::after {
+    opacity: 1;  
+  }
+  &-ok-box{
+    max-width: 42px;
+    width: 100%;
+    height: 42px;
+    opacity: 0.7;
+  }
+  &-ok-box:hover {
+    opacity: 0.4;
+  }
+  &-edit-box,
+  &-delete-box {
+    max-width: 42px;
+    width: 100%;
+    height: 42px;
+    opacity: 1.3;
+  }
+  &-edit-box:hover,
+  &-delete-box:hover {
+    opacity: 0.7;
+  }
+  [data-todo-option="active"] &:not([data-todo-state="active"]),
+  [data-todo-option="completed"] &:not([data-todo-state="completed"]),
+  &[data-todo-state="delete"] {
+    display: none;
+  }
+}
+li:last-of-type .toDo__added-item-edit-cmd::after{ 
+    background-color: inherit;
+}
+li:last-of-type .toDo__added-item-delete-cmd::after{ 
+  background-color: inherit;
+}
+/*_______________toDo__added_item end_______________*/
+
+/*_______________toDo__added_item_edit begin_______________*/
+.editable {
+  position: relative;
+  &:before {
+    content: "";
+    z-index: 1;
+    position: absolute;
+    left: 0em;
+    top: 0em;
+    min-height: 48px;
+    height: 100%;
+    width: 100%;
+    border-radius: 20px;
+    border-width: 1.5px;
+    border-style: solid;
+    //border-color: hsla(0,0%,0%,.2);
+    border-color: #494d4e;
+    border-right-color: transparent;
+    opacity: 0.7;
+    transform: rotate(2deg);
+  }
+  &:after {
+    content: "";
+    z-index: 1;
+    position: absolute;
+    left: 0em;
+    top: 0em;
+    width: 100%;
+    min-height: 48px;
+    height: 100%;
+    border-radius: 25px;
+    border-width: 1.5px;
+    border-style: solid;
+    //border-color: hsla(0,0%,0%,.2);   
+    border-color: #494d4e;
+    border-left-color: transparent;
+    border-top-color: transparent;
+    opacity: 0.7;
+    transform: rotate(-1deg);
+  }
+}
+/*_______________toDo__added_item)_edit end_______________*/
+
+@import "media";

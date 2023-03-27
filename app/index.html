@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>toDo</title>
+    <meta name="description" content="" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600;700&display=swap" rel="stylesheet"> 
+    <link rel="stylesheet" href="css/style.min.css" />
+  </head>
+  <body>
+    <section class="toDo">
+      <div class="container">
+        <div class="toDo__box">
+          
+         <!-- <form class="toDo__form">  -->
+          
+          <div class="toDo__folder-corner"> 
+            <div class="toDo__header-inner">         
+              <div class="toDo__header-menu-part1">
+                <div class="toDo__header-select-all ">
+                  <button class="toDo__header-select-all-cmd" type="submit" aria-label="select all">
+                    <div class="toDo__header-select-all-box">
+                      <img class="toDo__header-select-all-img" src="images\select_all.png" alt="">
+                    </div>                 
+                  </button>
+                </div>
+                <!-- <div class="tooltip bottom" tooltip-text="i am tooltip text bottom">
+
+                </div> -->
+                <div class="toDo__header-remove-all">
+                  <button class="toDo__header-remove-all-cmd" type="submit" aria-label="remove all">
+                    <div class="toDo__header-remove-all-box">
+                      <img class="toDo__header-remove-all-img" src="images\remouve_all.png" alt="">
+                    </div>                   
+                  </button>
+                </div>
+                <div class="toDo__header-filter-custom">
+                  <select class="toDo__header-filter" autocomplete="off">
+                    <option value="all">Без фильтра</option>
+                    <option value="active">Активные</option>
+                    <option value="completed">Завершённые</option>
+                  </select>
+                </div>
+              </div>
+    
+              <div class="toDo__header-menu-part2">
+                <div class="toDo__header-save">
+                  <button class="toDo__header-save-cmd" href="#">
+                    <div class="toDo__header-save-box">
+                      <img class="toDo__header-save-img" src="images\filesave.png" alt=""> 
+                    </div>                  
+                  </button>
+                </div>
+                <div class="toDo__header-reference">
+                  <button class="toDo__header-reference-cmd" type="submit" id="toDo-reference-btn" aria-label="reference">
+                    <div class="toDo__header-reference-box">
+                      <img class="toDo__header-reference-img" src="images\reference.png" alt=""> 
+                    </div>                  
+                  </button>
+                </div>
+                
+                <div class="reference-modal-window">
+                  <div class="reference-modal-window-size">
+                    <div class="reference-modal-window-content">
+                    <div class="reference-modal-window-header">
+                      <span class="reference-modal-window-close-btn">&times;</span>
+                      <h1 class="reference-modal-window-caption">
+                        <span class="reference-modal-window-caption-border">Справка</span>
+                      </h1>
+                    </div>  
+                      <div class="reference-modal-window-body">
+                        <p class="reference-modal-window-greetings">Привет!</p>
+                        <p class="reference-modal-window-intro">Я твой новый помощник. Сейчас я немного расскажу о том, что умею:</p>
+                        <ol class="reference-modal-window-list">
+                          <li class="reference-modal-window-item">
+                            <div class="reference-modal-window-add-link-box description-link-box">
+                              <a  class="reference-modal-window-add-link description-link" href="#">Добавить задачу
+                              </a>
+                            </div>
+                            <div class="reference-modal-window-add-description-box show-hide-description">
+                              Добавить задачу очень просто. Надо лишь набрать текст задачи и нажать на кнопку 
+                              <div class="reference-modal-window-add-text">
+                                Добавить                              
+                                <div class="reference-modal-window-add-box-img">
+                                  <img class="reference-modal-window-add-img" src="images\add_item.png" alt=""> 
+                                </div>
+                              </div> 
+                            </div>  
+                          </li>
+                          <li class="reference-modal-window-item">
+                            <div class="reference-modal-window-edit-link-box description-link-box">
+                              <a class="reference-modal-window-edit-link description-link" href="#">Изменить/Удалить</a>
+                            </div>
+                            <div class="reference-modal-window-edit-description-box show-hide-description">
+                            В случае ошибки достаточно нажать на иконку 
+                            <div class="reference-modal-window-edit-text">Редактировать 
+                              <div class="reference-modal-window-edit-box-img">           
+                                <img class="reference-modal-window-edit-img" src="images/edit_task.svg" alt=""> 
+                              </div> 
+                            </div>напротив задачи, и текст задачи можно будет изменить. Или же совсем удалить ненужную задачу, нажав на кнопку
+                            <div class="reference-modal-window-delete-text">Удалить 
+                              <div class="reference-modal-window-delete-box-img">           
+                                <img class="reference-modal-window-delete-img" src="images/delete_task.png" alt=""> 
+                              </div> 
+                            </div>                         
+                          </li>
+                          <li class="reference-modal-window-item">
+                            <div class="reference-modal-window-ok-link-box description-link-box">
+                              <a class="reference-modal-window-ok-link description-link" href="#">Отметить задачу, как сделанную</a>
+                            </div>
+                            <div class="reference-modal-window-ok-description-box show-hide-description">
+                              Отметить задачу, как сделанную, можно нажав на иконку 
+                              <div class="reference-modal-window-ok-text">Сделано 
+                                <div class="reference-modal-window-ok-box-img">           
+                                  <img class="reference-modal-window-ok-img" src="images/maked_task.png" alt=""> 
+                                </div> 
+                              </div>Для удобства вверху есть фильтр, который сортирует все задачи на выполненные и нет
+                            </div>
+                          </li>
+                          <li class="reference-modal-window-item">
+                            <div class="reference-modal-window-all-link-box description-link-box">
+                              <a class="reference-modal-window-all-link description-link" href="#">Сделать все/Отметить сделанное</a>
+                            </div>
+                            <div class="reference-modal-window-all-description-box show-hide-description">
+                            Отметить все задачи как сделанные можно, кликнув на иконке
+                              <div class="reference-modal-window-select-all-text">Сделать все 
+                                <div class="reference-modal-window-select-all-box-img">           
+                                  <img class="reference-modal-window-select-all-img" src="images/select_all.png" alt=""> 
+                                </div> 
+                              </div>или же наоборот команда
+                              <div class="reference-modal-window-remouve-all-text">Отменить сделанное 
+                                <div class="reference-modal-window-remouve-all-box-img">           
+                                  <img class="reference-modal-window-remouve-all-img" src="images/remouve_all.png" alt=""> 
+                                </div> 
+                              </div>сделает все задачи незавершенными 
+                            </div>
+                            </li>
+                          <li class="reference-modal-window-item">
+                            <div class="reference-modal-window-save-link-box description-link-box">
+                              <a class="reference-modal-window-save-link description-link" href="#">Сохранить список в файл</a>
+                            </div>
+                            <div class="reference-modal-window-save-description-box show-hide-description">
+                            Кнопка
+                              <div class="reference-modal-window-save-text">Сохранить в файл 
+                                <div class="reference-modal-window-save-box-img">           
+                                  <img class="reference-modal-window-save-img" src="images/filesave.png" alt=""> 
+                                </div> 
+                              </div>сохранит список активных задач в текстовый файл
+                            </div> 
+                          </li>
+                        </ol>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            </div>    
+          </div>            
+
+            <div class="toDo__add-item-box-inner">      
+              <div class="toDo__add-item-text toDo__add-item-border-sketch">          
+                <input class="toDo__add-item-element" type="text" placeholder="Какие планы?">             
+              </div>
+
+              <div class="toDo__add-item-plus">
+                <button class="toDo__add-item-plus-cmd" id="toDo-add-item-btn" type="submit" aria-label="plus">
+                  <div class="toDo__add-item-plus-box">
+                    <img class="toDo__add-item-plus-img" src="images\add_item.png" alt=""> 
+                  </div>                  
+                </button>
+              </div> 
+            </div>        
+               <ul class="toDo__added-box" id = "toDo-list-added-items" data-todo-option="active">
+               </ul>            
+          </div> 
+         </div>       
+       <!-- </form> -->
+      </div>
+    </div>  
+    </section>     
+
+    <script src="js/main.min.js"></script>
+  </body>
+</html>
