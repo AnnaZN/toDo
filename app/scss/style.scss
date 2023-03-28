@@ -63,7 +63,6 @@ img {
 .toDo__header-inner {
   width: 100%;
   display: flex;
-  //flex-wrap: nowrap;
   justify-content: space-between;
   align-items: center;
   gap: 20px;
@@ -91,10 +90,12 @@ img {
     border: 0;
     background-color: inherit;
   }
-  &-select-all-box,
-  &-remove-all-box {
+  &-select-all,
+  &-remove-all {
     max-width: 55px;
     width: 100%;
+    flex-basis: 55px;
+    flex-shrink: 2;
     height: 55px;
     opacity: 1.1;
   }
@@ -131,6 +132,8 @@ img {
 .toDo__header-save-box {
     max-width: 40px;
     width: 100%;
+    flex-basis: 40px;
+    flex-shrink: 1;
     height: 40px;
     opacity: 0.8;
     &:hover {
@@ -148,8 +151,8 @@ img {
 }
 .toDo__header-filter-custom {
   position: relative;
-  max-width: 150px;
-  width: 100%;
+  flex-basis: content;
+  white-space: nowrap;
   @extend %body_font;
   font-size: 30px;
   & .toDo__header-filter {
@@ -584,15 +587,11 @@ img {
 .toDo__added-box {
   padding-bottom: 81px;
 }
-
 .toDo__added-element {
   display: block;
-  max-width: 340px;
   width: 100%;
-  word-wrap: break-word;
   padding-bottom: 10px;
 }
-
 :root {
   --underline-intrinsic-width: 8;
   --underline-width: 12;
@@ -643,6 +642,7 @@ img {
 .toDo__added-item {
   display: flex;
   align-items: center;
+  word-break: break-word;
   padding: 0 12px 0 12px;
   &-text-box {
     width: 100%;
@@ -651,6 +651,8 @@ img {
   &-edit-cmd,
   &-delete-cmd {
     position: relative;
+    max-width: 50px;
+    width: 100%;
     border: 0;
     background-color: inherit;
   }
