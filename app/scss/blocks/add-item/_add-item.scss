@@ -1,0 +1,87 @@
+.toDo__add-item-text {
+  display: block;
+  width: 100%;
+}
+.toDo__add-item-box-inner {
+  display: flex;
+  align-items: center;
+  padding: 5px 0px 16px 25px;
+}
+.toDo__add-item-element {
+  display: block;
+  padding: 25px;
+  color: #212529;
+  width: 100%;
+  height: 68px;
+  border: none;
+  background: transparent;
+  @extend %body_font;
+  &::placeholder {
+    text-align: center;
+    opacity: 0.6;
+    @extend %body_font;
+  }
+}
+.toDo__add-item-border-sketch {
+  position: relative;
+  padding: 0 5px;
+  &:before {
+    content: "";
+    z-index: -1;
+    @extend %border-sketch;
+    height: 68px;
+    border-right-color: transparent;
+    transform: rotate(2deg);
+  }
+  &:after {
+    content: "";
+    z-index: -1;
+    @extend %border-sketch;
+    height: 68px;
+    border-left-color: transparent;
+    border-top-color: transparent;
+    transform: rotate(-1deg);
+  }
+}
+.toDo__add-item-plus-cmd {
+    position: relative;
+    border: 0;    
+    background-color: inherit;
+  
+  &::after {
+    content: "Добавить";
+    @extend %tooltip-bottom;  
+    margin: -11px 0 0 -1px;
+  }
+  &:hover::after{
+    opacity: 1;  
+  }
+}
+.toDo__add-item-plus-box {
+  max-width: 85px;
+  width: 100%;
+  height: 85px;
+  opacity: 0.7;
+ &:hover {
+    opacity: 0.4;
+   }
+}
+.toDo__add-item-plus-img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+
+/*_______________adaptive begin_______________*/
+@media (max-width: 1024px) {
+.toDo__add-item-plus-cmd{
+  cursor: default;  
+  &:hover::after{
+    opacity: 0;  
+  }
+}
+.toDo__add-item-plus-box:hover {
+  opacity: 0.7;
+}
+}
+/*_______________adaptive end_______________*/
