@@ -4,6 +4,7 @@
   min-height: 400px;
   background-color: #fdf3b6;
   box-shadow: -5px 5px 5px rgba(0, 0, 0, 0.2);
+
   &:before {
     content: "";
     position: absolute;
@@ -13,6 +14,7 @@
     border-right: 80px solid transparent;
     box-shadow: -7px -7px 7px rgba(0, 0, 0, 0.3);
   }
+
   &:after {
     content: "";
     position: absolute;
@@ -25,27 +27,32 @@
     box-shadow: 0 10px 0 #f9f7f4;
   }
 }
+
 .toDo__header-inner {
-  width: 100%;
   display: flex;
+  padding: 0 5px;
+  margin: 28px 0 28px 0;
+  height: 60px;
+  width: 100%;
   justify-content: space-between;
   align-items: center;
   gap: 20px;
-  height: 60px;
-  padding: 0 5px;
-  margin: 28px 0 28px 0;
+ 
 }
+
 .toDo__header-menu {
   &-part1,
   &-part2 {
     display: flex;
-    flex-wrap: nowrap;
     align-items: center;
+    flex-wrap: nowrap;
   }
 }
+
 .toDo__header-remove-all {
   margin-left: -9px;
 }
+
 .toDo__header {
   &-select-all-cmd,
   &-remove-all-cmd,
@@ -55,38 +62,45 @@
     border: 0;
     background-color: inherit;
   }
+
   &-select-all,
   &-remove-all {
-    max-width: 55px;
-    width: 100%;
     flex-basis: 55px;
     flex-shrink: 2;
     height: 55px;
+    width: 100%;
+    max-width: 55px;
     opacity: 1.1;
   }
+
   &-select-all-box:hover,
   &-remove-all-box:hover {
     opacity: 0.5;
   }
+
   &-select-all-cmd::after {
     content: "Сделать все";
     @extend %tooltip-bottom;  
   }
+
   &-remove-all-cmd::after {
     content: "Отменить сделанное";
-    @extend %tooltip-bottom;  
     margin-left: 15px;
+    @extend %tooltip-bottom;  
   }
+
   &-save-cmd::after {
     content: "Сохранить список";
-    @extend %tooltip-bottom;  
     margin: 7px 0 0 6px;
+    @extend %tooltip-bottom;  
   }
+
   &-reference-cmd::after {
     content: "Справка";
-    @extend %tooltip-bottom;  
     margin: -1px 0 0 -1px;
+    @extend %tooltip-bottom;  
   }
+
   &-select-all-cmd:hover::after,
   &-remove-all-cmd:hover::after,
   &-save-cmd:hover::after,
@@ -94,36 +108,43 @@
     opacity: 1;  
   }
 }
+
 .toDo__header-save-box {
-    max-width: 40px;
-    width: 100%;
-    flex-basis: 40px;
-    flex-shrink: 1;
-    height: 40px;
-    opacity: 0.8;
+  flex-basis: 40px;
+  flex-shrink: 1;
+  height: 40px;
+  width: 100%;
+  max-width: 40px; 
+  opacity: 0.8;
+
     &:hover {
       opacity: 0.5;
     }
-  }
+}
+
 .toDo__header-reference-box {
-  max-width: 52px;
-  width: 100%;
   height: 52px;
+  width: 100%;
+  max-width: 52px;
   opacity: 0.8;
+
   &:hover {
     opacity: 0.5;
   }
 }
+
 .toDo__header-filter-custom {
   position: relative;
   flex-basis: content;
-  white-space: nowrap;
   @extend %body_font;
   font-size: 30px;
+  white-space: nowrap;
+
   & .toDo__header-filter {
     display: none; 
   }
 }
+
 .select-selected {
   position: relative;
   z-index: 1;
@@ -131,6 +152,7 @@
   color: #212529;
   cursor: pointer;
 }
+
 .select-selected::after {
   content: "";
   position: absolute;
@@ -138,49 +160,54 @@
   left: 0;
   z-index: -1;
   display: block;
-  width: 100%;
   height: 100%;
+  width: 100%;
   background: url(../images/select_underline.png) no-repeat 0% 220%;
 }
+
 .select-items {
   position: absolute;
   top: 100%;
   left: 0;
   right: 0;
   z-index: 2;
+
   & div {
     position: relative;
     padding: 0 0 0.3em 0;
-    background-color: #fdf3b6;
     color: #212529;
+    background-color: #fdf3b6;
     cursor: pointer;
   }
+
   & div:hover {
     color: inherit;
   }
+
   & div::before {
     content: "";
     position: absolute;
     top: 38px;
     left: 0;
     display: block;
-    width: 100%;
     height: 15px;
-    opacity: 0;
+    width: 100%;
     background: url(../images/select_underline_item.png) no-repeat 0% 130%;
+    opacity: 0;
     transition: opacity 300ms, transform 300ms ease-in-out;
     transform: scaleX(0);
   }
+
   & div:hover::before {
     opacity: 1;
     transform: scaleX(1);
   }
 }
+
 .select-hide {
   display: none;
 }
 
-/*_______________adaptive begin_______________*/
 @media (max-width: 1024px) {
   .toDo__header {
     &-select-all-cmd,
@@ -189,11 +216,13 @@
     &-reference-cmd {
       cursor: auto;
     }
+
     &-select-all-box:hover,
     &-remove-all-box:hover {
       opacity: 1.1;
       cursor: auto;
     }
+
     &-select-all-cmd:hover::after,
     &-remove-all-cmd:hover::after,
     &-save-cmd:hover::after,
@@ -202,25 +231,30 @@
       cursor: auto;
     }
   }
+
   .toDo__header-save-box:hover {
       opacity: 0.8;
     }
+
     .toDo__header-reference-box {
       display: none
     }
+
     .select-selected {      
       cursor: default;
     }
+
     .select-items {
       & div {
         cursor: default;
       }
+
       & div:hover {
         color: inherit;
       }
+
       & div:hover::before {
         transform: scaleX(0);
       }
     }
 }
-/*_______________adaptive end_______________*/
