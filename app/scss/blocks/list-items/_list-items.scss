@@ -1,11 +1,3 @@
-.toDo__added-box {
-  padding-bottom: 81px;
-}
-.toDo__added-element {
-  display: block;
-  width: 100%;
-  padding-bottom: 10px;
-}
 :root {
   --underline-intrinsic-width: 8;
   --underline-width: 12;
@@ -13,6 +5,17 @@
   --underline-offset-y: -2px;
   --underline-padding-x: 0.12em;
 }
+
+.toDo__added-box {
+  padding-bottom: 81px;
+}
+
+.toDo__added-element {
+  display: block;
+  width: 100%;
+  padding-bottom: 10px;
+}
+
 .highlighted {
   display: inline;
   --underline-width-scale: calc(
@@ -45,85 +48,101 @@
     auto calc(var(--underline-width) * 1px),
     auto calc(var(--underline-width) * 1px);
 }
+
 .highlighted-width {
   --underline-width: 20;
   --underline-offset-y: -2px;
 }
+
 .bg-none {
   background-image: none;
 }
+
 .toDo__added-item {
   display: flex;
+  padding: 0 12px 0 12px;
   justify-content: space-between;
   align-items: center;
   word-break: break-word;
-  padding: 0 12px 0 12px;
+  
   &-text-box {
     width: 100%;
   }
+
   &-ok-cmd,
   &-edit-cmd,
   &-delete-cmd {
     position: relative;
-    max-width: 50px;
     width: 100%;
+    max-width: 50px;
     border: 0;
     background-color: inherit;
   }
+
   &-ok-cmd::after {
     content: "Выполнить";
-    @extend %tooltip-bottom;  
     margin: 6px 0 0 6px;
+    @extend %tooltip-bottom;  
   }
+
   &-edit-cmd::after {
     content: "Редактировать";
-    @extend %tooltip-bottom;  
     margin: 5px 0 0 0;
+    @extend %tooltip-bottom;  
   }
+
   &-delete-cmd::after {
     content: "Удалить";
-    @extend %tooltip-bottom;  
     margin: 5px 0 0 5px;
+    @extend %tooltip-bottom;  
   }
+
   &-ok-cmd:hover::after,
   &-edit-cmd,:hover::after,
   &-delete-cmd:hover::after {
     opacity: 1;  
   }
+
   &-ok-box{
-    max-width: 42px;
-    width: 100%;
     height: 42px;
+    width: 100%;
+    max-width: 42px;
     opacity: 0.7;
   }
+
   &-ok-box:hover {
     opacity: 0.4;
   }
+
   &-edit-box,
   &-delete-box {
-    max-width: 42px;
-    width: 100%;
     height: 42px;
+    width: 100%;
+    max-width: 42px;
     opacity: 1.3;
   }
+
   &-edit-box:hover,
   &-delete-box:hover {
     opacity: 0.7;
   }
+
   [data-todo-option="active"] &:not([data-todo-state="active"]),
   [data-todo-option="completed"] &:not([data-todo-state="completed"]),
   &[data-todo-state="delete"] {
     display: none;
   }
 }
+
 li:last-of-type .toDo__added-item-edit-cmd::after{ 
     background-color: inherit;
 }
+
 li:last-of-type .toDo__added-item-delete-cmd::after{ 
   background-color: inherit;
 }
 
-/*_______________adaptive begin_______________*/
+
 @media (max-width: 1024px) {
   .toDo__added-item {
     &-ok-cmd,
@@ -131,18 +150,20 @@ li:last-of-type .toDo__added-item-delete-cmd::after{
     &-delete-cmd {
     cursor: default   
     }
+
     &-ok-cmd:hover::after,
     &-edit-cmd:hover::after,
     &-delete-cmd:hover::after {
      opacity: 0;  
     }
+
     &-ok-box:hover {
       opacity: 0.7;
     }
+
     &-edit-box:hover,
     &-delete-box:hover {
       opacity: 1.3;
     }
   }
 }
-/*_______________adaptive end_______________*/
